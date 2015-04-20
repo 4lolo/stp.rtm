@@ -186,6 +186,7 @@ Widget.prototype = {
     },
     animateNumber: function (el, start, end) {
         if (!$.isNumeric(start) || !$.isNumeric(end)) {
+            el.text($.isNumeric(end) ? self.formatNumber(end.toFixed(end % 1 === 0 ? 0 : 1)) : end);
             return;
         }
 
