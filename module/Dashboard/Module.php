@@ -104,6 +104,12 @@ class Module
                 'TeamcityDao' => function (ServiceManager $serviceManager) {
                     return new Model\Dao\TeamcityDao($serviceManager->get('TeamcityDaoConfig'));
                 },
+                'ApiDaoConfig' => function (ServiceManager $serviceManager) {
+                    return $serviceManager->get('Config')['ApiDao'];
+                },
+                'ApiDao' => function (ServiceManager $serviceManager) {
+                    return new Model\Dao\ApiDao($serviceManager->get('ApiDaoConfig'));
+                },
                 'SmogDaoConfig' => function (ServiceManager $serviceManager) {
                     return $serviceManager->get('Config')['SmogDao'];
                 },
