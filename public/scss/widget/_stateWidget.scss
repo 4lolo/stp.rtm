@@ -1,0 +1,47 @@
+// ----------------------------------------------------------------------------
+// Widget-text styles
+// ----------------------------------------------------------------------------
+#dashboardBody .widget.StateWidget {
+    .widgetContainer table {
+        width: 100%;
+        height: 10rem;
+	}
+		
+	.widgetContainer table td {
+		line-height: 32px;
+		position: relative;
+	}
+		
+	.widgetContainer .service {
+		padding-left: 40px;
+		text-align: left;
+	}
+		
+	.widgetContainer .service:before {
+		box-shadow: 0px 0px 5px #50575B;
+		border-radius: 32px;
+		content: '';
+		display: block;
+		font-weight: bold;
+		height: 32px;
+		left: 0px;
+		position: absolute;
+		text-align: center;
+		width: 32px;
+	}
+	
+	.widgetContainer .service.service-state-disabled:before {
+		background-image: linear-gradient(#555753, #2e3436);
+	}
+	.widgetContainer .service.service-state-started:before {
+		background-image: linear-gradient(#8ae234, #73d216);
+	}
+	.widgetContainer .service.service-state-stopped:before {
+		background-image: linear-gradient(#ef2929, #cc0000);
+	}
+	.widgetContainer .service.service-state-unkwnown:before {
+		background-image: linear-gradient(#ef2929, #cc0000);
+		content: '?';
+		
+	}
+}

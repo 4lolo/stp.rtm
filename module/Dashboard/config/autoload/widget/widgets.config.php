@@ -152,6 +152,12 @@ return [
             'title' => 'Heroku Status',
             'subtitle' => '',
             'span' => 3
+        ],
+        'state' => [
+            'refreshRate' => 60,
+            'title' => '',
+            'subtitle' => '',
+            'span' => 3,
         ]
     ],
 ];
