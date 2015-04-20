@@ -30,4 +30,44 @@
         font-size: 4rem;
         line-height: 3rem;
     }
+
+    .widgetContainer.WARN:after, .widgetContainer.ERROR:after {
+        content: '!';
+        display: block;
+        font-size: 6rem;
+        font-weight: bold;
+        line-height: 0;
+        opacity: 0.5;
+        position: absolute;
+        left: 50%;
+        right: 50%;
+        top: 50%;
+        bottom: 50%;
+    }
+
+    .widgetContainer.WARN:before {
+        background-color: #fed500;
+        border-radius: 5px;
+        content: '';
+        display: block;
+        opacity: 0.5;
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+    }
+
+    .widgetContainer.ERROR:before {
+        background-color: #cf0d4d;
+        border-radius: 5px;
+        content: '';
+        display: block;
+        opacity: 0.5;
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+    }
 }

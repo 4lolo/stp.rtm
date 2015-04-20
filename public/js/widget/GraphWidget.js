@@ -11,7 +11,8 @@ function GraphWidget(widget, configName) {
         'value': '',
         'arrowClass': '',
         'percentageDiff': 0,
-        'oldValue': ''
+        'oldValue': '',
+        'status': ''
     };
 }
 
@@ -32,11 +33,10 @@ $.extend(GraphWidget.prototype, {
      * Updates widget's state
      */
     prepareData: function (response) {
-        if (response.data.length) {
-            var currentValue = response.data[response.data.length - 1].y;
-        } else {
-            var currentValue = 0;
-        }
+        var currentValue = response.data.length ? response.data[response.data.length - 1].y : undefined;
+        var percentageValue = this.params.max ? currentValue / this.params.max : 0;
+        var errorThreshold = this.params.errorThreshold || 2147483647;
+        var warnThreshold = this.params.warnThreshold || 2147483647;
 
         /**
          * Calculating diff from last collected value
@@ -44,14 +44,15 @@ $.extend(GraphWidget.prototype, {
         $.extend(this.dataToBind, this.setDifference(this.oldValue, currentValue));
 
         this.dataToBind.value = currentValue;
-
-        this.renderTemplate(this.dataToBind);
-        this.animateNumber(this.$widget.find('.mainValue'),this.oldValue, currentValue);
-        this.oldValue = currentValue;
+        this.dataToBind.status = (!currentValue && currentValue !== 0) || percentageValue >= errorThreshold ? 'ERROR' : (percentageValue >= warnThreshold ? 'WARN' : '');
 
         if (this.chart !== null) {
             this.chart.highcharts().destroy();
         }
+
+        this.renderTemplate(this.dataToBind);
+        this.animateNumber(this.$widget.find('.mainValue'),this.oldValue, (!currentValue && currentValue !== 0) ? '∞' : currentValue);
+        this.oldValue = currentValue;
 
         this.chart = $('.graph', this.widget).highcharts({
             chart: {
@@ -66,6 +67,7 @@ $.extend(GraphWidget.prototype, {
                 tickPixelInterval: 150
             },
             yAxis: {
+                max: this.params.max,
                 title: ''
             },
             tooltip: {
@@ -97,7 +99,7 @@ $.extend(GraphWidget.prototype, {
                     title: {
                         text: ''
                     },
-                    data: response.data
+                    data: response.data.map(function(p) { return { x: p.x, y: p.y || 0 }; })
                 }
             ]
         });
